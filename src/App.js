@@ -14,6 +14,9 @@ class App extends Component {
 			tax: "$00.00",
 			total: "$00.00",
 
+			firstName: "",
+			lastName: "",
+			email: "",
 			creditCard: "",
 			zipCode: "",
 		};
@@ -21,27 +24,21 @@ class App extends Component {
 
 	buyNow = (e) => {
 		e.preventDefault();
+		if (this.zipCode !== 5) {
+			alert("Zip code is not valid");
+		}
+		if (this.creditCard !== 16) {
+			alert("Credit card number is not valid");
+		}
 		if (this.creditCard === 16 && this.zipCode === 5) {
 			alert("Purchase complete");
-		} else if (this.zipCode !== 5) {
-			alert("Zip code is not valid");
-		} else if (this.creditCard !== 16) {
-			alert("Credit card number is not valid");
 		}
 	};
 
 	// adding the value for the credit card
-	creditCardCheck = (e) => {
-		console.log(this.state.creditCard);
+	changeInput = (e) => {
 		this.setState({
-			creditCard: e.target.value,
-		});
-	};
-
-	// adding the value for the zip code
-	zipCheck = (e) => {
-		this.setState({
-			zipCode: e.target.value,
+			[e.target.name]: e.target.value,
 		});
 	};
 
@@ -51,8 +48,6 @@ class App extends Component {
 			name: e.target.value,
 			price: e.target.value,
 		});
-		let splitted = this.state.name.name.split(",");
-		console.log(splitted);
 	};
 
 	render() {
@@ -105,15 +100,35 @@ class App extends Component {
 				<form onSubmit={this.buyNow} id="checkout">
 					Checkout
 					<label htmlFor="name">First Name</label>
-					<input type="text" id="name" />
+					<input type="text" id="name" name="name" onInput={this.changeInput} />
 					<label htmlFor="lastName">Last Name</label>
-					<input type="text" id="lastName" />
+					<input
+						type="text"
+						id="lastName"
+						name="lastName"
+						onInput={this.changeInput}
+					/>
 					<label htmlFor="email">Email</label>
-					<input type="text" id="email" />
+					<input
+						type="text"
+						id="email"
+						name="email"
+						onInput={this.changeInput}
+					/>
 					<label htmlFor="creditCard">Credit Card</label>
-					<input type="text" id="creditCard" onInput={this.creditCardCheck} />
+					<input
+						type="text"
+						id="creditCard"
+						name="creditCard"
+						onInput={this.changeInput}
+					/>
 					<label htmlFor="zip">Zip Code</label>
-					<input type="text" id="zip" onInput={this.zipCheck} />
+					<input
+						type="text"
+						id="zipCode"
+						name="zipCode"
+						onInput={this.changeInput}
+					/>
 					<button type="submit">Buy Now</button>
 				</form>
 			</div>
