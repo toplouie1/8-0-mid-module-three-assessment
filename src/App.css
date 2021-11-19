@@ -5,12 +5,9 @@
 }
 
 .products {
-	margin: 19px;
-}
-
-.listCart {
 	display: grid;
-	grid-template-columns: 2fr;
+	text-align: center;
+	padding: 30px;
 }
 
 #checkout {
