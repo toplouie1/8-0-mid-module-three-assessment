@@ -1,7 +1,122 @@
 import "./App.css";
+import data from "./data/productData.js";
+import { Component } from "react";
 
-const App = () => {
-  return <h1>Hello, world!</h1>;
-};
+class App extends Component {
+	constructor() {
+		super();
+		this.state = {
+			productList: data,
+			name: "",
+			price: "",
+			subTotal: "$00.00",
+			tax: "$00.00",
+			total: "$00.00",
+			creditCard: [],
+			zipCode: [],
+		};
+	}
+
+	buyNow = (e) => {
+		e.preventDefault();
+
+		if (this.creditCard.length === 16 && this.zipCode.length === 5) {
+			alert("Purchase complete");
+		} else if (this.zipCode.length !== 5) {
+			alert("Zip code is not valid");
+		} else if (this.creditCard.length !== 16) {
+			alert("Credit card number is not valid");
+		}
+	};
+
+	creditCardCheck = (e) => {
+		this.setState({
+			creditCard: e.target.value,
+		});
+	};
+
+	zipCheck = (e) => {
+		this.setState({
+			zipCode: e.target.value,
+		});
+	};
+
+	addToCart = (e) => {
+		console.log(e.target.value);
+		this.setState({
+			name: this.state.productList.name,
+			price: e.target.value.price,
+		});
+	};
+
+	render() {
+		//we will show each product
+
+		let productList = this.state.productList.map((product) => {
+			const formatPrice = (price) => `$${price.toFixed(2)}`;
+			const formPrice = formatPrice(product.price);
+			return (
+				<div>
+					<div>{product.name}</div>
+					<div>Price: {formPrice}</div>
+					<button value={product} onClick={this.addToCart}>
+						Add To Cart
+					</button>
+					<img src={product.img} alt="each product" />
+					<div>{product.description}</div>
+				</div>
+			);
+		});
+
+		let cartList = () => {
+			return (
+				<div>
+					<ul>
+						<li>
+							{this.state.name}
+							{this.state.price}
+						</li>
+					</ul>
+				</div>
+			);
+		};
+
+		console.log(this.state.productList);
+		return (
+			<div class="container">
+				<div className="products"> {productList}</div>
+				{/* list cart  */}
+
+				<div className="cart">
+					<div> {cartList} </div>
+					<div>Subtotal: {this.state.subTotal}</div>
+					<div>Tax: {this.state.tax}</div>
+					<div>Total: {this.state.total}</div>
+				</div>
+
+				{/* check out form  */}
+
+				<form onSubmit={this.buyNow} id="checkout">
+					<label htmlFor="name">First Name</label>
+					<input type="text" id="name" />
+
+					<label htmlFor="lastName">Last Name</label>
+					<input type="text" id="lastName" />
+
+					<label htmlFor="email">Email</label>
+					<input type="text" id="email" />
+
+					<label htmlFor="creditCard">Credit Card</label>
+					<input type="text" id="creditCard" onInput={this.creditCardCheck} />
+
+					<label htmlFor="zip">Zip Code</label>
+					<input type="text" id="zip" onInput={this.zipCheck} />
+
+					<button type="submit">Buy Now</button>
+				</form>
+			</div>
+		);
+	}
+}
 
 export default App;

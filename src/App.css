@@ -1,1 +1,20 @@
+.container {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	width: 100%;
+}
 
+.products {
+	margin: 19px;
+}
+
+.listCart {
+	display: grid;
+	grid-template-columns: 2fr;
+}
+
+#checkout {
+	margin: 19px;
+	display: grid;
+	grid-template-columns: 1fr;
+}
